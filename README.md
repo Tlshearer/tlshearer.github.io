@@ -42,7 +42,7 @@
 
 <header>
   <h1>T's BBQ Sauce</h1>
-  <p>Bold flavor. Real smoke. Homestyle BBQ.</p>
+  <p>Discover the authentic taste of homestyle BBQ with T's BBQ Sauce, a gluten-free masterpiece crafted in small batches by Sonoma Farms. This original recipe strikes the perfect balance between flavor and heat, delivering a unique taste experience with a subtle spicy kick at the finish. Each 1-pound bottle contains 16 servings of this carefully crafted sauce, with just 40 calories per 2-tablespoon serving. The sauce features a thoughtfully balanced profile with 7g of sugar per serving and no fat, making it a versatile addition to your grilling arsenal. Whether you're glazing ribs, brushing it on grilled chicken, or using it as a dipping sauce, this BBQ sauce promises to elevate your dishes with its distinctive flavor. The quality control maintained through small-batch production ensures consistency in every bottle, while the gluten-free formulation makes it accessible to those with dietary restrictions. Experience the difference that attention to detail and premium ingredients can make in a BBQ sauce..</p>
 </header>
 
 <section>
