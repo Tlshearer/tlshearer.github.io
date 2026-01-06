@@ -1,20 +1,59 @@
 # tlshearer.github.io
-# ts-bbq-sauce.github.io
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>T's BBQ Sauce</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      text-align: center;
+    }
+    header {
+      padding: 60px 20px;
+    }
+    h1 {
+      color: #ffb347;
+      font-size: 3rem;
+    }
+    img {
+      max-width: 420px;
+      width: 90%;
+      margin-top: 25px;
+      border-radius: 12px;
+    }
+    .cta a {
+      display: inline-block;
+      margin: 10px;
+      background-color: #ffb347;
+      color: #1a1a1a;
+      padding: 14px 28px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-This repository hosts the static website for T's BBQ Sauce. It is set up to be served via GitHub Pages from the `main` branch.
+<header>
+  <h1>T's BBQ Sauce</h1>
+  <p>Bold flavor. Real smoke. Homestyle BBQ.</p>
+</header>
 
-Contents
-- `index.html` — Homepage that displays the product photo and a short description.
-- `assets/` — Styles and images. Image expected at `assets/images/label.jpg`.
+<section>
+  <p>Gluten-free, small-batch BBQ sauce with the perfect balance of flavor and heat.</p>
+</section>
 
-How to update
-1. Edit files locally or in this repo.
-2. Commit and push to the `main` branch (or the branch used for Pages).
-3. GitHub Pages will publish changes automatically within a few minutes.
+<section class="cta">
+  <h2>Buy Now</h2>
+  <a href="#">PayPal</a>
+  <a href="#">Venmo</a>
+</section>
 
-Image & assets
-- To add the bottle photo, put the file at `assets/images/label.jpg`.
-- If you prefer another filename or location, update `index.html` accordingly.
-
-License
-Specify your license here (e.g. MIT) or remove this section.
+</body>
+</html>
