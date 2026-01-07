@@ -134,6 +134,31 @@
     Please include your shipping address in the payment notes.
   </p>
 </section>
+<script>
+  function estimateShipping() {
+    const zip = document.getElementById("zip").value.trim();
+    const result = document.getElementById("shippingResult");
+
+    if (!/^\d{5}$/.test(zip)) {
+      result.textContent = "Please enter a valid 5-digit ZIP code.";
+      return;
+    }
+
+    // Distance approximation from 46123
+    const firstDigit = parseInt(zip.charAt(0));
+    let cost;
+
+    if (firstDigit <= 3) {
+      cost = 6.95;        // closer states
+    } else if (firstDigit <= 6) {
+      cost = 9.95;        // mid-range
+    } else {
+      cost = 12.95;       // far distance
+    }
+
+    result.textContent = `Estimated shipping: $${cost.toFixed(2)}`;
+  }
+</script>
 
 
 </body>
