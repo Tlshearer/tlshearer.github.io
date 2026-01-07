@@ -60,8 +60,10 @@ section {
 .image-slider {
   display: flex;
   gap: 16px;
+  justify-content: center; /* CENTER IMAGES */
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
 }
 
 .image-slider img {
@@ -72,6 +74,13 @@ section {
   scroll-snap-align: center;
   cursor: zoom-in;
   flex-shrink: 0;
+}
+
+/* Mobile swipe behavior */
+@media (max-width: 768px) {
+  .image-slider {
+    justify-content: flex-start;
+  }
 }
 
 /* Zoom modal */
@@ -122,7 +131,6 @@ button, input, select {
   background: #262626;
   padding: 25px;
   border-radius: 14px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
 .testimonial p {
@@ -243,10 +251,29 @@ function closeZoom() {
 
 <section>
   <h2>About T’s BBQ Sauce</h2>
-  <p>Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>, a gluten-free masterpiece crafted in small batches by Sonoma Farms.</p>
-  <p>Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just <strong>40 calories per 2-tablespoon serving</strong>.</p>
-  <p>Whether you're glazing ribs, brushing it on grilled chicken, or using it as a dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor.</p>
-  <p style="font-weight:bold; color:#ffb347;">Gluten-free • Small-batch • Perfect balance of flavor & heat</p>
+
+  <p>
+    Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
+    a gluten-free masterpiece crafted in small batches by Sonoma Farms.
+    This original recipe strikes the perfect balance between flavor and heat,
+    delivering a unique taste experience with a subtle spicy kick at the finish.
+  </p>
+
+  <p>
+    Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just
+    <strong>40 calories per 2-tablespoon serving</strong>. With
+    <strong>7g of sugar per serving</strong> and <strong>no fat</strong>, it’s a
+    versatile addition to your grilling arsenal.
+  </p>
+
+  <p>
+    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
+    dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
+  </p>
+
+  <p style="font-weight:bold; color:#ffb347;">
+    Gluten-free • Small-batch • Perfect balance of flavor & heat
+  </p>
 </section>
 
 <section>
@@ -312,4 +339,5 @@ function closeZoom() {
 
 </body>
 </html>
+
 
