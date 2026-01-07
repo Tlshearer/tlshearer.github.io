@@ -28,11 +28,43 @@
     padding: 40px 20px;
   }
 
-  img {
+  /* Swipeable gallery */
+  .gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+  }
+
+  .gallery img {
+    scroll-snap-align: center;
     max-width: 260px;
     width: 90%;
-    margin: 10px;
     border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .price {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  select, input, button {
+    padding: 10px;
+    margin: 8px;
+    font-size: 16px;
+  }
+
+  .buy-buttons a {
+    display: inline-block;
+    margin: 10px;
+    padding: 14px 30px;
+    background: #ffb347;
+    color: #1b1b1b;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
   }
 
   footer {
@@ -41,7 +73,63 @@
     padding: 30px 20px;
     font-size: 14px;
   }
+
+  @media (max-width: 600px) {
+    section {
+      padding: 30px 15px;
+    }
+  }
 </style>
+
+<script>
+const pricePerBottle = 8.00;
+const weightPerBottle = 1.5;
+let shippingCost = 0;
+
+function updateTotals() {
+  const qty = parseInt(document.getElementById("quantity").value);
+  const productTotal = pricePerBottle * qty;
+  document.getElementById("productTotal").textContent =
+    `Product total: $${productTotal.toFixed(2)}`;
+  updateGrandTotal(productTotal);
+}
+
+function estimateShipping() {
+  const zip = document.getElementById("zip").value.trim();
+  const result = document.getElementById("shippingResult");
+
+  if (!/^\d{5}$/.test(zip)) {
+    result.textContent = "Please enter a valid 5-digit ZIP code.";
+    return;
+  }
+
+  const qty = parseInt(document.getElementById("quantity").value);
+  const totalWeight = qty * weightPerBottle;
+  const firstDigit = parseInt(zip.charAt(0));
+
+  let baseRate;
+  if (firstDigit <= 3) baseRate = 6.50;
+  else if (firstDigit <= 6) baseRate = 9.00;
+  else baseRate = 12.00;
+
+  const weightSurcharge = Math.max(0, totalWeight - 1) * 1.25;
+  shippingCost = baseRate + weightSurcharge;
+
+  result.textContent =
+    `Estimated shipping (${totalWeight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
+
+  updateTotals();
+}
+
+function updateGrandTotal(productTotal = null) {
+  const qty = parseInt(document.getElementById("quantity").value);
+  const baseTotal = productTotal ?? pricePerBottle * qty;
+  const grand = shippingCost > 0 ? baseTotal + shippingCost : baseTotal;
+
+  document.getElementById("grandTotal").textContent =
+    shippingCost > 0 ? `Grand total: $${grand.toFixed(2)}` : "";
+}
+</script>
 </head>
 
 <body>
@@ -53,9 +141,12 @@
 
 <section>
   <h2>Product Images</h2>
-  <img src="images/ts-bbq-sauce1.jpg" alt="T’s BBQ Sauce Bottle">
-  <img src="images/ts-bbq-sauce2.jpg" alt="T’s BBQ Sauce Label">
-  <img src="images/ts-bbq-sauce3.jpg" alt="T’s BBQ Sauce Serving Suggestion">
+  <div class="gallery">
+    <img src="images/ts-bbq-sauce1.jpg" alt="T’s BBQ Sauce Bottle">
+    <img src="images/ts-bbq-sauce2.jpg" alt="T’s BBQ Sauce Label">
+    <img src="images/ts-bbq-sauce3.jpg" alt="T’s BBQ Sauce Serving Suggestion">
+  </div>
+  <p style="font-size:14px;color:#aaa;">Swipe left or right on mobile</p>
 </section>
 
 <section>
@@ -85,10 +176,40 @@
   </p>
 </section>
 
+<section>
+  <h2>Buy Now</h2>
+
+  <p class="price"><strong>$8.00 per bottle (16 oz)</strong></p>
+
+  <label>Quantity:</label><br>
+  <select id="quantity" onchange="updateTotals()">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+
+  <p id="productTotal"></p>
+
+  <label>Estimate Shipping (ships from 46123):</label><br>
+  <input id="zip" placeholder="ZIP code">
+  <button onclick="estimateShipping()">Calculate Shipping</button>
+
+  <p id="shippingResult"></p>
+  <p id="grandTotal"></p>
+
+  <div class="buy-buttons">
+    <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
+    <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
+  </div>
+</section>
+
 <footer>
-  © 2026 T’s BBQ Sauce • All Rights Reserved
+  © 2026 T’s BBQ Sauce • Contact: info@tsbbqsauce.com
 </footer>
 
 </body>
 </html>
+
 
