@@ -104,6 +104,28 @@
   <p style="font-size:1.4rem;margin-bottom:25px;color:#ffb347;">
     <strong>$8.00 per bottle</strong>
   </p>
+<section style="margin-top:20px;">
+  <p style="font-size:20px;font-weight:bold;">
+    Price: $12.99 per bottle (16 oz)
+  </p>
+
+  <div style="margin-top:15px;">
+    <label for="zip" style="font-weight:bold;">
+      Estimate Shipping (ships from 46123):
+    </label><br><br>
+
+    <input type="text" id="zip" placeholder="Enter ZIP code"
+           style="padding:8px;width:160px;">
+
+    <button onclick="estimateShipping()"
+            style="padding:8px 14px;margin-left:10px;cursor:pointer;">
+      Calculate
+    </button>
+
+    <p id="shippingResult"
+       style="margin-top:12px;font-weight:bold;"></p>
+  </div>
+</section>
 
   <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
   <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
