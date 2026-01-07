@@ -13,55 +13,30 @@
     color: #ffffff;
     text-align: center;
   }
+
   header {
     padding: 60px 20px;
   }
+
   h1 {
     color: #ffb347;
     font-size: 3rem;
   }
-  section
-  {<section>
-  <h2>About T’s BBQ Sauce</h2>
 
-  <p>
-    Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
-    a gluten-free masterpiece crafted in small batches by Sonoma Farms.
-    This original recipe strikes the perfect balance between flavor and heat,
-    delivering a unique taste experience with a subtle spicy kick at the finish.
-  </p>
-
-  <p>
-    Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings of this carefully
-    crafted sauce, with just <strong>40 calories per 2-tablespoon serving</strong>.
-    The sauce features a thoughtfully balanced profile with <strong>7g of sugar per
-    serving</strong> and <strong>no fat</strong>, making it a versatile addition to
-    your grilling arsenal.
-  </p>
-
-  <p>
-    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
-    dipping sauce, T’s BBQ Sauce promises to elevate your dishes with its distinctive
-    flavor. Small-batch production ensures consistency in every bottle, while the
-    gluten-free formulation makes it accessible to those with dietary restrictions.
-  </p>
-
-  <p style="font-weight:bold; color:#ffb347;">
-    Gluten-free • Small-batch • Perfect balance of flavor & heat
-  </p>
-section {
-  max-width: 900px;
-  margin: auto;
-  padding: 30px 20px;
-}
+  section {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px;
   }
+
   img {
     max-width: 260px;
     width: 90%;
     margin: 10px;
     border-radius: 12px;
   }
-  .buy a {
+
+  a {
     display: inline-block;
     margin: 10px;
     padding: 14px 30px;
@@ -71,6 +46,7 @@ section {
     font-weight: bold;
     border-radius: 6px;
   }
+
   input, select, button {
     padding: 8px;
     margin: 6px;
@@ -137,9 +113,36 @@ function updateGrandTotal(productTotal = null) {
 
 <section>
   <h2>Product Images</h2>
-  <img src="images/ts-bbq-sauce1.jpg">
-  <img src="images/ts-bbq-sauce2.jpg">
-  <img src="images/ts-bbq-sauce3.jpg">
+  <img src="images/ts-bbq-sauce1.jpg" alt="T's BBQ Sauce Bottle Front">
+  <img src="images/ts-bbq-sauce2.jpg" alt="T's BBQ Sauce Bottle Back">
+  <img src="images/ts-bbq-sauce3.jpg" alt="T's BBQ Sauce Serving Suggestion">
+</section>
+
+<section>
+  <h2>About T’s BBQ Sauce</h2>
+
+  <p>
+    Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
+    a gluten-free masterpiece crafted in small batches by Sonoma Farms.
+    This original recipe strikes the perfect balance between flavor and heat,
+    delivering a unique taste experience with a subtle spicy kick at the finish.
+  </p>
+
+  <p>
+    Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just
+    <strong>40 calories per 2-tablespoon serving</strong>. With
+    <strong>7g of sugar per serving</strong> and <strong>no fat</strong>, it’s a
+    versatile addition to your grilling arsenal.
+  </p>
+
+  <p>
+    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
+    dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
+  </p>
+
+  <p style="font-weight:bold; color:#ffb347;">
+    Gluten-free • Small-batch • Perfect balance of flavor & heat
+  </p>
 </section>
 
 <section>
@@ -147,13 +150,13 @@ function updateGrandTotal(productTotal = null) {
 
   <p><strong>$8.00 per bottle (16 oz)</strong></p>
 
-  <label>Quantity:</label>
+  <label>Quantity:</label><br>
   <select id="quantity" onchange="updateTotals()">
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
   </select>
 
   <p id="productTotal"></p>
