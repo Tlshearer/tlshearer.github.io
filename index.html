@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,3 +84,63 @@ function estimateShipping() {
 
   result.textContent =
     `Estimate
+  result.textContent =
+    `Estimated shipping (${totalWeight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
+
+  updateTotals();
+}
+
+function updateGrandTotal(productTotal = null) {
+  const qty = parseInt(document.getElementById("quantity").value);
+  const baseTotal = productTotal ?? pricePerBottle * qty;
+  const grand = shippingCost > 0 ? baseTotal + shippingCost : baseTotal;
+
+  document.getElementById("grandTotal").textContent =
+    shippingCost > 0 ? `Grand total: $${grand.toFixed(2)}` : "";
+}
+</script>
+</head>
+
+<body>
+
+<header>
+  <h1>T's BBQ Sauce</h1>
+  <p>Small-batch, gluten-free BBQ sauce with bold flavor and a subtle spicy finish.</p>
+</header>
+
+<section>
+  <h2>Product Images</h2>
+  <img src="images/ts-bbq-sauce1.jpg">
+  <img src="images/ts-bbq-sauce2.jpg">
+  <img src="images/ts-bbq-sauce3.jpg">
+</section>
+
+<section>
+  <h2>Buy Now</h2>
+
+  <p><strong>$8.00 per bottle (16 oz)</strong></p>
+
+  <label>Quantity:</label>
+  <select id="quantity" onchange="updateTotals()">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+  </select>
+
+  <p id="productTotal"></p>
+
+  <label>Estimate Shipping (ships from 46123):</label><br>
+  <input id="zip" placeholder="ZIP code">
+  <button onclick="estimateShipping()">Calculate</button>
+
+  <p id="shippingResult"></p>
+  <p id="grandTotal"></p>
+
+  <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
+  <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
+</section>
+
+</body>
+</html>
