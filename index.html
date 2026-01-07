@@ -82,8 +82,6 @@ function estimateShipping() {
   shippingCost = baseRate + weightSurcharge;
 
   result.textContent =
-    `Estimate
-  result.textContent =
     `Estimated shipping (${totalWeight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
 
   updateTotals();
