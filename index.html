@@ -111,10 +111,37 @@ button, input, select {
   font-size: 1rem;
 }
 
-.sold-out {
-  color: #ff5555;
-  font-weight: bold;
-  font-size: 1.2rem;
+/* Sticky mobile buy bar */
+.mobile-buy {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-buy {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffb347;
+    padding: 14px;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .mobile-buy a {
+    background: #1b1b1b;
+    color: #ffffff;
+    padding: 14px 30px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+
+  body {
+    padding-bottom: 80px;
+  }
 }
 
 footer {
@@ -129,27 +156,10 @@ footer a { color: #ffb347; }
 <script>
 const pricePerBottle = 8.00;
 const weightPerBottle = 1.5;
-let inventory = 24;
 let shippingCost = 0;
-
-function updateInventory() {
-  document.getElementById("inventory").textContent =
-    inventory > 0 ? `In stock: ${inventory} bottles` : "SOLD OUT";
-
-  document.getElementById("buySection").style.display =
-    inventory > 0 ? "block" : "none";
-
-  document.getElementById("soldOutMsg").style.display =
-    inventory > 0 ? "none" : "block";
-}
 
 function updateTotals() {
   const qty = parseInt(document.getElementById("quantity").value);
-  if (qty > inventory) {
-    alert("Not enough inventory available.");
-    document.getElementById("quantity").value = inventory;
-    return;
-  }
   const productTotal = pricePerBottle * qty;
   document.getElementById("productTotal").textContent =
     `Product total: $${productTotal.toFixed(2)}`;
@@ -186,8 +196,6 @@ function zoomImage(src) {
 function closeZoom() {
   document.getElementById("zoomModal").style.display = "none";
 }
-
-document.addEventListener("DOMContentLoaded", updateInventory);
 </script>
 </head>
 
@@ -202,7 +210,6 @@ document.addEventListener("DOMContentLoaded", updateInventory);
   <h2>Product Images</h2>
   <div class="image-slider">
     <img src="images/ts-bbq-sauce1.jpg" loading="lazy" onclick="zoomImage(this.src)">
-    <img src="images/ts-bbq-sauce2.jpg" loading="lazy" onclick="zoomImage(this.src)">
     <img src="images/ts-bbq-sauce3.jpg" loading="lazy" onclick="zoomImage(this.src)">
   </div>
   <p style="font-size:0.9rem;">Swipe or tap to zoom</p>
@@ -237,14 +244,8 @@ document.addEventListener("DOMContentLoaded", updateInventory);
 
 <section class="buy-now-strip">
   <h2>BUY IT NOW</h2>
-  <p>$8 per bottle • Limited inventory • Ships fast</p>
+  <p>$8 per bottle • Ships fast</p>
   <a href="#buySection">Order Yours Today</a>
-</section>
-
-<section>
-  <h2>Inventory</h2>
-  <p id="inventory"></p>
-  <p id="soldOutMsg" class="sold-out" style="display:none;">Currently Sold Out</p>
 </section>
 
 <section id="buySection">
@@ -276,10 +277,14 @@ document.addEventListener("DOMContentLoaded", updateInventory);
   <p>© <script>document.write(new Date().getFullYear())</script> T’s BBQ Sauce</p>
 </footer>
 
+<!-- Sticky Mobile Buy -->
+<div class="mobile-buy">
+  <a href="#buySection">Buy Now • $8</a>
+</div>
+
 <div id="zoomModal" onclick="closeZoom()">
   <img id="zoomImg">
 </div>
 
 </body>
 </html>
-
