@@ -60,7 +60,7 @@ section {
 .image-slider {
   display: flex;
   gap: 16px;
-  justify-content: center; /* CENTER IMAGES */
+  justify-content: center;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 10px;
@@ -76,7 +76,6 @@ section {
   flex-shrink: 0;
 }
 
-/* Mobile swipe behavior */
 @media (max-width: 768px) {
   .image-slider {
     justify-content: flex-start;
@@ -131,6 +130,12 @@ button, input, select {
   background: #262626;
   padding: 25px;
   border-radius: 14px;
+}
+
+.stars {
+  color: #ffb347;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .testimonial p {
@@ -269,6 +274,8 @@ function closeZoom() {
   <p>
     Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
     dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
+    It’s crafted for backyard pitmasters, competition cooks, and anyone who
+    appreciates quality ingredients and unforgettable taste.
   </p>
 
   <p style="font-weight:bold; color:#ffb347;">
@@ -280,14 +287,17 @@ function closeZoom() {
   <h2>What People Are Saying</h2>
   <div class="testimonials">
     <div class="testimonial">
+      <div class="stars">★★★★★</div>
       <p>“Hands down the best BBQ sauce I’ve ever had. Perfect heat and flavor balance.”</p>
       <span>— Mike R.</span>
     </div>
     <div class="testimonial">
+      <div class="stars">★★★★★</div>
       <p>“Not too sweet, not too spicy. This sauce is incredible on ribs and chicken.”</p>
       <span>— Sarah L.</span>
     </div>
     <div class="testimonial">
+      <div class="stars">★★★★★</div>
       <p>“You can tell it’s small-batch quality. My family goes through bottles fast.”</p>
       <span>— James T.</span>
     </div>
@@ -339,5 +349,6 @@ function closeZoom() {
 
 </body>
 </html>
+
 
 
