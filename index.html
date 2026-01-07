@@ -5,6 +5,70 @@
   <title>T's BBQ Sauce</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    <script>
+  const pricePerBottle = 12.99;
+  const weightPerBottle = 1.5; // lbs (bottle + packaging)
+  let shippingCost = 0;
+
+  function updateTotals() {
+    const qty = parseInt(document.getElementById("quantity").value);
+    const productTotal = pricePerBottle * qty;
+
+    document.getElementById("productTotal").textContent =
+      `Product total: $${productTotal.toFixed(2)}`;
+
+    updateGrandTotal(productTotal);
+  }
+
+  function estimateShipping() {
+    const zip = document.getElementById("zip").value.trim();
+    const result = document.getElementById("shippingResult");
+
+    if (!/^\d{5}$/.test(zip)) {
+      result.textContent = "Please enter a valid 5-digit ZIP code.";
+      return;
+    }
+
+    const qty = parseInt(document.getElementById("quantity").value);
+    const totalWeight = qty * weightPerBottle;
+    const firstDigit = parseInt(zip.charAt(0));
+
+    // Base rate by distance (rough USPS Ground tiers)
+    let baseRate;
+    if (firstDigit <= 3) {
+      baseRate = 6.50;
+    } else if (firstDigit <= 6) {
+      baseRate = 9.00;
+    } else {
+      baseRate = 12.00;
+    }
+
+    // Weight surcharge (Pirate Ship–style scaling)
+    const weightSurcharge = Math.max(0, totalWeight - 1) * 1.25;
+
+    shippingCost = baseRate + weightSurcharge;
+
+    result.textContent =
+      `Estimated shipping (${totalWeight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
+
+    updateTotals();
+  }
+
+  function updateGrandTotal(productTotal = null) {
+    const qty = parseInt(document.getElementById("quantity").value);
+    const baseTotal = productTotal ?? pricePerBottle * qty;
+    const grand = shippingCost > 0 ? baseTotal + shippingCost : baseTotal;
+
+    document.getElementById("grandTotal").textContent =
+      shippingCost > 0
+        ? `Grand total: $${grand.toFixed(2)}`
+        : "";
+  }
+
+  // Initialize
+  updateTotals();
+</script>
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -99,7 +163,7 @@
 
 <section style="margin-top:20px;">
   <p style="font-size:20px;font-weight:bold;">
-    Price: $7.99 per bottle (16 oz)
+    Price: $12.99 per bottle (16 oz)
   </p>
 
   <label for="quantity" style="font-weight:bold;">
@@ -135,7 +199,6 @@
   <p id="grandTotal"
      style="margin-top:15px;font-size:18px;font-weight:bold;"></p>
 </section>
-
 
   <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
   <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
