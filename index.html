@@ -111,6 +111,32 @@ button, input, select {
   font-size: 1rem;
 }
 
+/* Testimonials */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.testimonial {
+  background: #262626;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.testimonial p {
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.testimonial span {
+  display: block;
+  margin-top: 12px;
+  color: #ffb347;
+  font-weight: bold;
+}
+
 /* Sticky mobile buy bar */
 .mobile-buy {
   display: none;
@@ -217,29 +243,28 @@ function closeZoom() {
 
 <section>
   <h2>About T’s BBQ Sauce</h2>
+  <p>Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>, a gluten-free masterpiece crafted in small batches by Sonoma Farms.</p>
+  <p>Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just <strong>40 calories per 2-tablespoon serving</strong>.</p>
+  <p>Whether you're glazing ribs, brushing it on grilled chicken, or using it as a dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor.</p>
+  <p style="font-weight:bold; color:#ffb347;">Gluten-free • Small-batch • Perfect balance of flavor & heat</p>
+</section>
 
-  <p>
-    Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
-    a gluten-free masterpiece crafted in small batches by Sonoma Farms.
-    This original recipe strikes the perfect balance between flavor and heat,
-    delivering a unique taste experience with a subtle spicy kick at the finish.
-  </p>
-
-  <p>
-    Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just
-    <strong>40 calories per 2-tablespoon serving</strong>. With
-    <strong>7g of sugar per serving</strong> and <strong>no fat</strong>, it’s a
-    versatile addition to your grilling arsenal.
-  </p>
-
-  <p>
-    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
-    dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
-  </p>
-
-  <p style="font-weight:bold; color:#ffb347;">
-    Gluten-free • Small-batch • Perfect balance of flavor & heat
-  </p>
+<section>
+  <h2>What People Are Saying</h2>
+  <div class="testimonials">
+    <div class="testimonial">
+      <p>“Hands down the best BBQ sauce I’ve ever had. Perfect heat and flavor balance.”</p>
+      <span>— Mike R.</span>
+    </div>
+    <div class="testimonial">
+      <p>“Not too sweet, not too spicy. This sauce is incredible on ribs and chicken.”</p>
+      <span>— Sarah L.</span>
+    </div>
+    <div class="testimonial">
+      <p>“You can tell it’s small-batch quality. My family goes through bottles fast.”</p>
+      <span>— James T.</span>
+    </div>
+  </div>
 </section>
 
 <section class="buy-now-strip">
@@ -277,7 +302,6 @@ function closeZoom() {
   <p>© <script>document.write(new Date().getFullYear())</script> T’s BBQ Sauce</p>
 </footer>
 
-<!-- Sticky Mobile Buy -->
 <div class="mobile-buy">
   <a href="#buySection">Buy Now • $8</a>
 </div>
@@ -288,3 +312,4 @@ function closeZoom() {
 
 </body>
 </html>
+
