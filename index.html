@@ -97,35 +97,45 @@
 <section class="buy">
   <h2>Buy Now</h2>
 
-  <p style="font-size:1.2rem;margin-bottom:10px;">
-    <strong>1 lb (16 oz) Bottle</strong>
-  </p>
-
-  <p style="font-size:1.4rem;margin-bottom:25px;color:#ffb347;">
-    <strong>$8.00 per bottle</strong>
-  </p>
 <section style="margin-top:20px;">
   <p style="font-size:20px;font-weight:bold;">
-    Price: $8.0 per bottle (16 oz)
+    Price: $7.99 per bottle (16 oz)
   </p>
 
-  <div style="margin-top:15px;">
-    <label for="zip" style="font-weight:bold;">
-      Estimate Shipping (ships from 46123):
-    </label><br><br>
+  <label for="quantity" style="font-weight:bold;">
+    Quantity:
+  </label>
+  <select id="quantity" onchange="updateTotals()"
+          style="padding:6px;margin-left:8px;">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
 
-    <input type="text" id="zip" placeholder="Enter ZIP code"
-           style="padding:8px;width:160px;">
+  <p id="productTotal" style="margin-top:10px;font-weight:bold;"></p>
 
-    <button onclick="estimateShipping()"
-            style="padding:8px 14px;margin-left:10px;cursor:pointer;">
-      Calculate
-    </button>
+  <hr style="margin:25px 0;">
 
-    <p id="shippingResult"
-       style="margin-top:12px;font-weight:bold;"></p>
-  </div>
+  <label for="zip" style="font-weight:bold;">
+    Estimate Shipping (ships from 46123):
+  </label><br><br>
+
+  <input type="text" id="zip" placeholder="Enter ZIP code"
+         style="padding:8px;width:160px;">
+
+  <button onclick="estimateShipping()"
+          style="padding:8px 14px;margin-left:10px;cursor:pointer;">
+    Calculate
+  </button>
+
+  <p id="shippingResult" style="margin-top:12px;font-weight:bold;"></p>
+
+  <p id="grandTotal"
+     style="margin-top:15px;font-size:18px;font-weight:bold;"></p>
 </section>
+
 
   <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
   <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
