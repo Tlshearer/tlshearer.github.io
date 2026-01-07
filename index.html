@@ -6,105 +6,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #1b1b1b;
-    color: #ffffff;
-    text-align: center;
-  }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #1b1b1b;
+  color: #ffffff;
+  text-align: center;
+}
 
-  header {
-    padding: 50px 20px;
-  }
+header { padding: 50px 20px; }
 
-  h1 {
-    color: #ffb347;
-    font-size: 2.8rem;
-    margin-bottom: 10px;
-  }
+h1 {
+  color: #ffb347;
+  font-size: 2.8rem;
+}
 
-  section {
-    max-width: 900px;
-    margin: auto;
-    padding: 40px 20px;
-  }
+section {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
 
-  /* Swipeable images (FIXED to prevent stretching) */
-  .image-slider {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
-    justify-content: center;
-  }
+/* Image slider */
+.image-slider {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
 
-  .image-slider img {
-    scroll-snap-align: center;
-    max-width: 260px;
-    width: 100%;
-    height: auto;            /* ✅ prevents stretch */
-    object-fit: contain;     /* ✅ preserves proportions */
-    border-radius: 12px;
-    flex-shrink: 0;
-  }
+.image-slider img {
+  width: 260px;
+  height: 260px;              /* square auto-crop */
+  object-fit: cover;          /* no stretch */
+  border-radius: 12px;
+  scroll-snap-align: center;
+  cursor: zoom-in;
+  flex-shrink: 0;
+}
 
-  /* Buttons */
-  .buy-buttons a {
-    display: inline-block;
-    margin: 12px;
-    padding: 16px 34px;
-    background: #ffb347;
-    color: #1b1b1b;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    font-size: 1.1rem;
-  }
+/* Zoom modal */
+#zoomModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
 
-  input, select, button {
-    padding: 10px;
-    margin: 6px;
-    font-size: 1rem;
-  }
+#zoomModal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  cursor: zoom-out;
+}
 
-  .testimonial {
-    background: #2a2a2a;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-  }
+/* Buttons */
+.buy-buttons a {
+  display: inline-block;
+  margin: 12px;
+  padding: 16px 34px;
+  background: #ffb347;
+  color: #1b1b1b;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
 
-  footer {
-    background: #111;
-    padding: 30px 20px;
-    font-size: 0.9rem;
-    margin-top: 40px;
-  }
+button, input, select {
+  padding: 10px;
+  margin: 6px;
+  font-size: 1rem;
+}
 
-  footer a {
-    color: #ffb347;
-    text-decoration: none;
-  }
+.sold-out {
+  color: #ff5555;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 
-  @media (max-width: 600px) {
-    h1 {
-      font-size: 2.2rem;
-    }
-    section {
-      padding: 30px 15px;
-    }
-  }
+.testimonial {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+footer {
+  background: #111;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+}
+
+footer a { color: #ffb347; }
 </style>
 
 <script>
 const pricePerBottle = 8.00;
 const weightPerBottle = 1.5;
+let inventory = 24;   // 👈 starting inventory
 let shippingCost = 0;
+
+function updateInventory() {
+  document.getElementById("inventory").textContent =
+    inventory > 0 ? `In stock: ${inventory} bottles` : "SOLD OUT";
+
+  document.getElementById("buySection").style.display =
+    inventory > 0 ? "block" : "none";
+
+  document.getElementById("soldOutMsg").style.display =
+    inventory > 0 ? "none" : "block";
+}
 
 function updateTotals() {
   const qty = parseInt(document.getElementById("quantity").value);
+  if (qty > inventory) {
+    alert("Not enough inventory available.");
+    document.getElementById("quantity").value = inventory;
+    return;
+  }
   const productTotal = pricePerBottle * qty;
   document.getElementById("productTotal").textContent =
     `Product total: $${productTotal.toFixed(2)}`;
@@ -114,38 +137,36 @@ function updateTotals() {
 function estimateShipping() {
   const zip = document.getElementById("zip").value.trim();
   const result = document.getElementById("shippingResult");
-
   if (!/^\d{5}$/.test(zip)) {
-    result.textContent = "Please enter a valid 5-digit ZIP code.";
+    result.textContent = "Enter a valid ZIP code.";
     return;
   }
-
   const qty = parseInt(document.getElementById("quantity").value);
-  const totalWeight = qty * weightPerBottle;
-  const firstDigit = parseInt(zip.charAt(0));
-
-  let baseRate;
-  if (firstDigit <= 3) baseRate = 6.50;
-  else if (firstDigit <= 6) baseRate = 9.00;
-  else baseRate = 12.00;
-
-  const weightSurcharge = Math.max(0, totalWeight - 1) * 1.25;
-  shippingCost = baseRate + weightSurcharge;
-
+  const weight = qty * weightPerBottle;
+  const zone = parseInt(zip[0]);
+  let base = zone <= 3 ? 6.5 : zone <= 6 ? 9 : 12;
+  shippingCost = base + Math.max(0, weight - 1) * 1.25;
   result.textContent =
-    `Estimated shipping (${totalWeight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
-
+    `Estimated shipping (${weight.toFixed(1)} lb): $${shippingCost.toFixed(2)}`;
   updateTotals();
 }
 
-function updateGrandTotal(productTotal = null) {
-  const qty = parseInt(document.getElementById("quantity").value);
-  const baseTotal = productTotal ?? pricePerBottle * qty;
-  const grand = shippingCost > 0 ? baseTotal + shippingCost : baseTotal;
-
+function updateGrandTotal(productTotal) {
+  const grand = shippingCost ? productTotal + shippingCost : productTotal;
   document.getElementById("grandTotal").textContent =
-    shippingCost > 0 ? `Grand total: $${grand.toFixed(2)}` : "";
+    shippingCost ? `Grand total: $${grand.toFixed(2)}` : "";
 }
+
+/* Tap-to-zoom */
+function zoomImage(src) {
+  document.getElementById("zoomImg").src = src;
+  document.getElementById("zoomModal").style.display = "flex";
+}
+function closeZoom() {
+  document.getElementById("zoomModal").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", updateInventory);
 </script>
 </head>
 
@@ -159,71 +180,43 @@ function updateGrandTotal(productTotal = null) {
 <section>
   <h2>Product Images</h2>
   <div class="image-slider">
-    <img src="images/ts-bbq-sauce2.jpg" alt="BBQ Sauce Bottle">
-    <img src="images/ts-bbq-sauce1.jpg" alt="BBQ Sauce Label">
-    <img src="images/ts-bbq-sauce3.jpg" alt="BBQ Sauce Serving">
+    <img src="images/ts-bbq-sauce1.jpg" loading="lazy" onclick="zoomImage(this.src)">
+    <img src="images/ts-bbq-sauce2.jpg" loading="lazy" onclick="zoomImage(this.src)">
+    <img src="images/ts-bbq-sauce3.jpg" loading="lazy" onclick="zoomImage(this.src)">
   </div>
-  <p style="font-size:0.9rem;">Swipe to view →</p>
+  <p style="font-size:0.9rem;">Swipe or tap to zoom</p>
 </section>
 
 <section>
   <h2>About T’s BBQ Sauce</h2>
-
-  <p>
-    Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
-    a gluten-free masterpiece crafted in small batches by Sonoma Farms.
-    This original recipe strikes the perfect balance between flavor and heat,
-    delivering a unique taste experience with a subtle spicy kick at the finish.
-  </p>
-
-  <p>
-    Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just
-    <strong>40 calories per 2-tablespoon serving</strong>. With
-    <strong>7g of sugar per serving</strong> and <strong>no fat</strong>, it’s a
-    versatile addition to your grilling arsenal.
-  </p>
-
-  <p>
-    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
-    dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
-  </p>
-
-  <p style="font-weight:bold; color:#ffb347;">
+  <p><strong>Discover the authentic taste of homestyle BBQ</strong> with this gluten-free,
+  small-batch sauce crafted by Sonoma Farms. Perfect balance of flavor and heat with a
+  subtle spicy finish.</p>
+  <p>1-lb (16 oz) bottle • 40 calories per serving • 7g sugar • No fat</p>
+  <p style="color:#ffb347;font-weight:bold;">
     Gluten-free • Small-batch • Perfect balance of flavor & heat
   </p>
 </section>
 
 <section>
-  <h2>What Customers Say</h2>
-
-  <div class="testimonial">
-    ⭐⭐⭐⭐⭐<br>
-    “Hands down the best BBQ sauce I’ve had — perfect sweetness and heat.”
-  </div>
-
-  <div class="testimonial">
-    ⭐⭐⭐⭐⭐<br>
-    “Great on ribs, chicken, even burgers. You can taste the quality.”
-  </div>
+  <h2>Inventory</h2>
+  <p id="inventory"></p>
+  <p id="soldOutMsg" class="sold-out" style="display:none;">Currently Sold Out</p>
 </section>
 
-<section>
+<section id="buySection">
   <h2>Buy Now</h2>
-
-  <p><strong>$8.00 per bottle (16 oz)</strong></p>
+  <p><strong>$8.00 per bottle</strong></p>
 
   <label>Quantity:</label><br>
   <select id="quantity" onchange="updateTotals()">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
+    <option>1</option><option>2</option><option>3</option>
+    <option>4</option><option>5</option>
   </select>
 
   <p id="productTotal"></p>
 
-  <label>Estimate Shipping (ships from 46123):</label><br>
+  <label>Estimate Shipping (from 46123)</label><br>
   <input id="zip" placeholder="ZIP code">
   <button onclick="estimateShipping()">Calculate</button>
 
@@ -231,22 +224,21 @@ function updateGrandTotal(productTotal = null) {
   <p id="grandTotal"></p>
 
   <div class="buy-buttons">
-    <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Buy with PayPal</a>
-    <a href="https://venmo.com/YOURVENMONAME" target="_blank">Buy with Venmo</a>
+    <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
+    <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
   </div>
 </section>
 
 <footer>
-  <p>Questions? Email us at <a href="mailto:info@tsbbqsauce.com">info@tsbbqsauce.com</a></p>
-  <p>© <span id="year"></span> T’s BBQ Sauce. All rights reserved.</p>
+  <p>Contact: <a href="mailto:info@tsbbqsauce.com">info@tsbbqsauce.com</a></p>
+  <p>© <script>document.write(new Date().getFullYear())</script> T’s BBQ Sauce</p>
 </footer>
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<!-- Zoom Modal -->
+<div id="zoomModal" onclick="closeZoom()">
+  <img id="zoomImg">
+</div>
 
 </body>
 </html>
-
-
 
