@@ -15,18 +15,24 @@
   }
 
   header {
-    padding: 60px 20px;
+    padding: 60px 20px 40px;
   }
 
   h1 {
     color: #ffb347;
     font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    color: #ffb347;
+    margin-bottom: 15px;
   }
 
   section {
     max-width: 900px;
     margin: auto;
-    padding: 30px 20px;
+    padding: 40px 20px;
   }
 
   img {
@@ -36,20 +42,77 @@
     border-radius: 12px;
   }
 
-  a {
+  /* BUY CARD */
+  .buy-card {
+    background: #242424;
+    border-radius: 14px;
+    padding: 30px 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  }
+
+  .price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  /* BUTTONS */
+  .btn {
     display: inline-block;
-    margin: 10px;
-    padding: 14px 30px;
-    background: #ffb347;
+    margin: 12px 10px;
+    padding: 16px 34px;
+    background: linear-gradient(135deg, #ffb347, #ff9900);
     color: #1b1b1b;
     text-decoration: none;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(255,179,71,0.4);
   }
 
   input, select, button {
-    padding: 8px;
-    margin: 6px;
+    padding: 10px;
+    margin: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+    background: #121212;
+    color: #aaaaaa;
+    font-size: 14px;
+  }
+
+  footer a {
+    color: #ffb347;
+    text-decoration: none;
+  }
+
+  /* MOBILE TWEAKS */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2.3rem;
+    }
+    .btn {
+      width: 90%;
+      max-width: 320px;
+    }
+    img {
+      max-width: 90%;
+    }
   }
 </style>
 
@@ -101,6 +164,8 @@ function updateGrandTotal(productTotal = null) {
   document.getElementById("grandTotal").textContent =
     shippingCost > 0 ? `Grand total: $${grand.toFixed(2)}` : "";
 }
+
+window.onload = updateTotals;
 </script>
 </head>
 
@@ -113,9 +178,9 @@ function updateGrandTotal(productTotal = null) {
 
 <section>
   <h2>Product Images</h2>
-  <img src="images/ts-bbq-sauce1.jpg" alt="T's BBQ Sauce Bottle Front">
-  <img src="images/ts-bbq-sauce2.jpg" alt="T's BBQ Sauce Bottle Back">
-  <img src="images/ts-bbq-sauce3.jpg" alt="T's BBQ Sauce Serving Suggestion">
+  <img src="images/ts-bbq-sauce1.jpg" alt="Bottle front">
+  <img src="images/ts-bbq-sauce2.jpg" alt="Bottle back">
+  <img src="images/ts-bbq-sauce3.jpg" alt="Serving suggestion">
 </section>
 
 <section>
@@ -124,20 +189,12 @@ function updateGrandTotal(productTotal = null) {
   <p>
     Discover the authentic taste of homestyle BBQ with <strong>T’s BBQ Sauce</strong>,
     a gluten-free masterpiece crafted in small batches by Sonoma Farms.
-    This original recipe strikes the perfect balance between flavor and heat,
-    delivering a unique taste experience with a subtle spicy kick at the finish.
   </p>
 
   <p>
     Each <strong>1-pound (16 oz) bottle</strong> contains 16 servings with just
-    <strong>40 calories per 2-tablespoon serving</strong>. With
-    <strong>7g of sugar per serving</strong> and <strong>no fat</strong>, it’s a
-    versatile addition to your grilling arsenal.
-  </p>
-
-  <p>
-    Whether you're glazing ribs, brushing it on grilled chicken, or using it as a
-    dipping sauce, T’s BBQ Sauce delivers bold, consistent flavor in every bottle.
+    <strong>40 calories per 2-tablespoon serving</strong>, <strong>7g sugar</strong>,
+    and <strong>no fat</strong>.
   </p>
 
   <p style="font-weight:bold; color:#ffb347;">
@@ -145,10 +202,10 @@ function updateGrandTotal(productTotal = null) {
   </p>
 </section>
 
-<section>
+<section class="buy-card">
   <h2>Buy Now</h2>
 
-  <p><strong>$8.00 per bottle (16 oz)</strong></p>
+  <p class="price">$8.00 per bottle (16 oz)</p>
 
   <label>Quantity:</label><br>
   <select id="quantity" onchange="updateTotals()">
@@ -168,9 +225,24 @@ function updateGrandTotal(productTotal = null) {
   <p id="shippingResult"></p>
   <p id="grandTotal"></p>
 
-  <a href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
-  <a href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
+  <a class="btn" href="https://www.paypal.me/YOURPAYPALNAME" target="_blank">Pay with PayPal</a>
+  <a class="btn" href="https://venmo.com/YOURVENMONAME" target="_blank">Pay with Venmo</a>
 </section>
+
+<footer>
+  <p>
+    © <span id="year"></span> T’s BBQ Sauce. All rights reserved.
+  </p>
+  <p>
+    Questions? Email us at
+    <a href="mailto:info@tsbbqsauce.com">info@tsbbqsauce.com</a>
+  </p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
+
