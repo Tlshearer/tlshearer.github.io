@@ -213,7 +213,7 @@ function updateTotals() {
 
 function estimateShipping() {
   const zip = document.getElementById("zip").value.trim();
-  if (!/^\d{10}$/.test(zip)) {
+  if (!/^\d{5}$/.test(zip)) {
     document.getElementById("shippingResult").textContent = "Enter a valid ZIP code.";
     return;
   }
@@ -316,7 +316,7 @@ function closeZoom() {
   <label>Quantity:</label><br>
   <select id="quantity" onchange="updateTotals()">
     <option>1</option><option>2</option><option>3</option>
-    <option>4</option><option>5</option>
+    <option>4</option><option>10</option>
   </select>
 
   <p id="productTotal"></p>
