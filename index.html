@@ -213,7 +213,7 @@ function updateTotals() {
 
 function estimateShipping() {
   const zip = document.getElementById("zip").value.trim();
-  if (!/^\d{5}$/.test(zip)) {
+  if (!/^\d{10}$/.test(zip)) {
     document.getElementById("shippingResult").textContent = "Enter a valid ZIP code.";
     return;
   }
